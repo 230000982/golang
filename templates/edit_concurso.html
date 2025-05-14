@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Concurso</title>
+    <style>
+        /* Reset e estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        body {
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+            line-height: 1.6;
+            background-color: #f8fafc;
+            color: #1e293b;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+    
+        h1 {
+            color: #3182ce;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            font-weight: 600;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+    
+        h3 {
+            color: #334155;
+            margin: 1.5rem 0 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+    
+        /* Formulário */
+        form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+    
+        label {
+            display: block;
+            margin: 1rem 0 0.5rem;
+            font-weight: 500;
+            color: #334155;
+        }
+    
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        input[type="time"],
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+    
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="date"]:focus,
+        input[type="time"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+        }
+    
+        /* Grupo data-hora */
+        .date-time-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+    
+        .date-time-group label {
+            flex: 1;
+            margin-top: 0;
+        }
+    
+        .date-time-group input {
+            margin-top: 0.5rem;
+        }
+    
+        /* Checkboxes */
+        input[type="checkbox"] {
+            margin-right: 0.5rem;
+            width: 1.1rem;
+            height: 1.1rem;
+            accent-color: #2563eb;
+        }
+    
+        .checkbox-group {
+            margin: 1.5rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+    
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            cursor: pointer;
+        }
+    
+        /* Botões */
+        button[type="submit"] {
+            background-color: #3182ce;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+    
+        button[type="submit"]:hover {
+            background-color: #1e568a;
+        }
+    
+        /* Link de voltar */
+        a {
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #3182ce;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+    
+        a:hover {
+            color: #1e40af;
+            text-decoration: underline;
+        }
+    
+        /* Responsividade */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+    
+            form {
+                padding: 1.5rem;
+            }
+    
+            .date-time-group {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            input[type="text"],
+            input[type="number"],
+            input[type="date"],
+            input[type="time"],
+            select {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Editar Concurso</h1>
+    <form action="/update-concurso/{{.Concurso.ID}}" method="POST">
+        <label for="referencia">Referência:</label>
+        <input type="text" id="referencia" name="referencia" value="{{.Concurso.Referencia}}" required><br>
+        
+        <label for="entidade">Entidade:</label>
+        <input type="text" id="entidade" name="entidade" value="{{.Concurso.Entidade}}"><br>
+        
+        <h3>Erros</h3>
+        <div class="date-time-group">
+            <label for="dia_erro"></label>
+            <input type="date" id="dia_erro" name="dia_erro" value="{{.Concurso.DiaErro.String}}">
+            
+            <label for="hora_erro"></label>
+            <input type="time" id="hora_erro" name="hora_erro" value="{{.Concurso.HoraErro.String}}"><br>
+        </div>
+
+        <h3>Proposta</h3>
+        <div class="date-time-group">
+            <label for="dia_proposta"></label>
+            <input type="date" id="dia_proposta" name="dia_proposta" value="{{.Concurso.DiaProposta.String}}">
+            
+            <label for="hora_proposta"></label>
+            <input type="time" id="hora_proposta" name="hora_proposta" value="{{.Concurso.HoraProposta.String}}"><br>
+        </div>
+
+        <label for="preco">Preço:</label>
+        <input type="number" id="preco" name="preco" value="{{.Concurso.Preco}}" step="0.01" required><br>
+
+        <label for="tipo_id">Tipo:</label>
+        <select id="tipo_id" name="tipo_id" required>
+            {{range .Tipos}}
+            <option value="{{.ID}}" {{if eq .ID $.Concurso.TipoID}}selected{{end}}>{{.Descricao}}</option>
+            {{end}}
+        </select><br>
+
+        <label for="plataforma_id">Plataforma:</label>
+        <select id="plataforma_id" name="plataforma_id" required>
+            {{range .Plataformas}}
+            <option value="{{.ID}}" {{if eq .ID $.Concurso.PlataformaID}}selected{{end}}>{{.Descricao}}</option>
+            {{end}}
+        </select><br>
+
+        <label for="referencia_bc">Referência BC:</label>
+        <input type="text" id="referencia_bc" name="referencia_bc" value="{{.Concurso.ReferenciaBC}}"><br>
+
+        <label for="preliminar">
+            <input type="checkbox" id="preliminar" name="preliminar" {{if .Concurso.Preliminar}}checked{{end}}>
+            Preliminar
+        </label> 
+
+        <h3>Audiência</h3>
+        <div class="date-time-group">
+            <label for="dia_audiencia"></label>
+            <input type="date" id="dia_audiencia" name="dia_audiencia" value="{{.Concurso.DiaAudiencia.String}}">
+            
+            <label for="hora_audiencia"></label>
+            <input type="time" id="hora_audiencia" name="hora_audiencia" value="{{.Concurso.HoraAudiencia.String}}"><br>
+        </div>
+
+        <label for="final">
+            <input type="checkbox" id="final" name="final" {{if .Concurso.Final}}checked{{end}}>
+            Final
+        </label> 
+        
+        <label for="recurso">
+            <input type="checkbox" id="recurso" name="recurso" {{if .Concurso.Recurso}}checked{{end}}>
+            Recurso
+        </label> 
+
+        <label for="impugnacao">
+            <input type="checkbox" id="impugnacao" name="impugnacao" {{if .Concurso.Impugnacao}}checked{{end}}>
+            Impugnação
+        </label> 
+
+        <label for="estado_id">Estado:</label>
+        <select id="estado_id" name="estado_id" required>
+            {{range .Estados}}
+            <option value="{{.ID}}" {{if eq .ID $.Concurso.EstadoID}}selected{{end}}>{{.Descricao}}</option>
+            {{end}}
+        </select><br>
+
+        <button type="submit">Salvar</button>
+    </form>
+    <br>
+    <a href="/concursos">Voltar à lista de concursos</a>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAV</title>
+    <style>
+        /* Reset e estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 20px;
+        }
+    
+        /* Container principal */
+        .container {
+            max-width: 98%;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+    
+        /* Cabeçalho */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #dee2e6;
+        }
+    
+        h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+    
+        /* Links */
+        a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+    
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+    
+        /* Formulário de pesquisa */
+        form {
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+    
+        label {
+            font-weight: 600;
+            color: #495057;
+        }
+    
+        input[type="text"] {
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 1rem;
+            flex: 1;
+            min-width: 200px;
+            max-width: 400px;
+        }
+    
+        /* Botões */
+        button {
+            background-color: #3182ce;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+    
+        button:hover {
+            background-color: #1e568a;
+        }
+    
+        button[type="submit"] {
+            background-color: #3182ce;
+        }
+    
+        button[type="submit"]:hover {
+            background-color: #1e568a;
+        }
+    
+        /* Tabela */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+    
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+    
+        th {
+            background-color: #3182ce;
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+    
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+    
+        tr:hover {
+            background-color: #e9ecef;
+        }
+    
+        /* Células específicas */
+        td[colspan="2"] {
+            text-align: center;
+        }
+    
+        /* Botão de editar */
+        .edit-btn {
+            background-color: #3498db;
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+    
+        .edit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        /* Responsividade */
+        @media (max-width: 1200px) {
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+    
+            form {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+    
+            input[type="text"] {
+                width: 100%;
+                max-width: 100%;
+            }
+    
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.9rem;
+            }
+        }
+    
+        @media (max-width: 576px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+    
+            th, td {
+                padding: 6px 8px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Lista de Concursos</h1>
+    </div>
+    <a href="/home">Voltar</a>
+    <br><br>
+    <a href="/create-concurso">
+        <button>Criar Concurso</button>
+    </a>
+    <!-- formulário de pesquisa -->
+    <form action="/concursos" method="get">
+        <label for="referencia">Pesquisar por Referência:</label>
+        <input type="text" id="referencia" name="referencia" placeholder="Digite a referência">
+        <button type="submit">Buscar</button>
+        <a href="/concursos" style="margin-left: 10px;">Limpar pesquisa</a>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Referência</th>
+                <th>Entidade</th>
+                <th>Esclarecimentos/Erros</th>
+                <th>Hora</th>
+                <th>Proposta/Limite</th>
+                <th>Hora</th>
+                <th>Preço Base</th>
+                <th>Ref. BC</th>
+                <th>Tipo</th>
+                <th>Plataforma</th>
+                <th>Preliminar</th>
+                <th>Audiência/Prévia</th>
+                <th>Hora</th>
+                <th>Final</th>
+                <th>Recurso</th>
+                <th>Impugnação</th>
+                <th>Estado</th>
+                <th>Editar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .}}
+            <tr>
+                <td>{{.Referencia}}</td>
+                <td>{{.Entidade}}</td>
+                <td>{{if .DiaErro.Valid}}{{.DiaErro.String}}{{else}}N/A{{end}}</td>
+                <td>{{if .HoraErro.Valid}}{{.HoraErro.String}}{{else}}N/A{{end}}</td>
+                <td>{{if .DiaProposta.Valid}}{{.DiaProposta.String}}{{else}}N/A{{end}}</td>
+                <td>{{if .HoraProposta.Valid}}{{.HoraProposta.String}}{{else}}N/A{{end}}</td>
+                <td>{{.Preco}}</td>
+                <td>{{.ReferenciaBC}}</td>
+                <td>{{.Tipo}}</td>
+                <td>{{.Plataforma}}</td>
+                <td>{{if .Preliminar}}X{{end}}</td>
+                <td>{{if .DiaAudiencia.Valid}}{{.DiaAudiencia.String}}{{else}}N/A{{end}}</td>
+                <td>{{if .HoraAudiencia.Valid}}{{.HoraAudiencia.String}}{{else}}N/A{{end}}</td>
+                <td>{{if .Final}}X{{end}}</td>
+                <td>{{if .Recurso}}X{{end}}</td>
+                <td>{{if .Impugnacao}}X{{end}}</td>
+                <td>
+                    {{if eq .Estado 1}}Em Andamento
+                    {{else if eq .Estado 2}}Enviado
+                    {{else if eq .Estado 3}}Não Enviado
+                    {{else if eq .Estado 4}}Declaração
+                    {{else}}N/A{{end}}
+                </td>
+                <td>
+                    <a href="/edit-concurso/{{.ID}}">
+                        <button>Editar</button>
+                    </a>
+                </td>
+            </tr>
+            {{end}}
+        </tbody>           
+    </table>
+</body>
+</html>

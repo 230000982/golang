@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CDC</title>
+    <style>
+/* Reset de margin e padding para garantir consistência */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilização do body */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f9;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Estilização dos links de navegação */
+body > a {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    min-width: 120px;
+}
+
+body > a:hover {
+    background-color: #0056b3;
+    text-decoration: none;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    body > a {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+    </style>
+</head>
+<body>
+    <h1>Controlo de Concursos</h1>
+    <a href="/concursos">SAV</a>
+    <a href="/auth">Login</a>
+    <a href="/concursos-ordenados">DCP</a>
+</body>
+</html>

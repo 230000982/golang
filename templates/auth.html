@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register</title>
+    <style>
+        /* Reset de margin e padding para garantir consistência */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        /* Estilização do body */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+    
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+    
+        /* Estilização do formulário */
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: none;
+        }
+    
+        form.active {
+            display: block;
+        }
+    
+        label {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+    
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+    
+        input[type="checkbox"] {
+            width: auto;
+            display: inline-block;
+            margin-right: 10px;
+        }
+    
+        /* Estilização dos botões */
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+    
+        button:hover {
+            background-color: #0056b3;
+        }
+    
+        /* Estilo para o link de voltar */
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 1rem;
+            display: inline-block;
+            margin-top: 20px;
+            text-align: center;
+        }
+    
+        a:hover {
+            text-decoration: underline;
+        }
+    
+        /* Estilo para os botões de toggle */
+        .toggle-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+    
+        .toggle-btn {
+            width: auto;
+            padding: 10px 20px;
+            margin: 0;
+            background-color: #6c757d;
+        }
+    
+        .toggle-btn.active {
+            background-color: #007bff;
+        }
+    
+        .toggle-btn:hover {
+            background-color: #5a6268;
+        }
+    
+        .toggle-btn.active:hover {
+            background-color: #0056b3;
+        }
+    
+        /* Responsividade */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            form {
+                padding: 15px;
+            }
+    
+            input, select {
+                font-size: 0.9rem;
+            }
+    
+            button {
+                font-size: 1rem;
+            }
+    
+            .toggle-buttons {
+                flex-direction: column;
+            }
+    
+            .toggle-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Bem-vindo</h1>
+    
+    <div class="toggle-buttons">
+        <button class="toggle-btn active" onclick="showForm('login-form')">Login</button>
+        <button class="toggle-btn" onclick="showForm('register-form')">Registrar</button>
+    </div>
+    
+    <form id="login-form" class="active" action="/login" method="POST">
+        <label for="login-email">Email:</label>
+        <input type="email" id="login-email" name="email" required>
+        
+        <label for="login-password">Password:</label>
+        <input type="password" id="login-password" name="password" required>
+        
+        <button type="submit">Login</button>
+    </form>
+    
+    <form id="register-form" action="/register" method="POST">
+        <label for="register-email">Email:</label>
+        <input type="email" id="register-email" name="email" required>
+        
+        <label for="register-password">Password:</label>
+        <input type="password" id="register-password" name="password" required>
+        
+        <label for="register-confirm-password">Confirmar Password:</label>
+        <input type="password" id="register-confirm-password" name="confirm-password" required>
+        
+        <button type="submit">Registrar</button>
+    </form>
+
+    <script>
+        function showForm(formId) {
+            // Esconde todos os formulários
+            document.querySelectorAll('form').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            // Mostra o formulário selecionado
+            document.getElementById(formId).classList.add('active');
+            
+            // Atualiza os botões de toggle
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Ativa o botão correspondente
+            if (formId === 'login-form') {
+                document.querySelector('.toggle-btn:nth-child(1)').classList.add('active');
+            } else {
+                document.querySelector('.toggle-btn:nth-child(2)').classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
