@@ -188,7 +188,7 @@
         <label for="entidade">Entidade:</label>
         <input type="text" id="entidade" name="entidade"><br>
         
-        <h3>Erros</h3>
+        <h3>Esclarecimentos/Erros</h3>
         <div class="date-time-group">
             <label for="dia_erro"></label>
             <input type="date" id="dia_erro" name="dia_erro">
@@ -209,9 +209,12 @@
         <label for="preco">Preço:</label>
         <input type="number" id="preco" name="preco" step="0.01"><br>
     
+        <label for="referencia_bc">Referência BC:</label>
+        <input type="text" id="referencia_bc" name="referencia_bc"><br>
+
         <label for="tipo_id">Tipo:</label>
         <select id="tipo_id" name="tipo_id">
-            <option value="">Selecione um tipo</option>
+            <option value="6">Selecione um tipo</option>
             {{range .Tipos}}
             <option value="{{.ID}}">{{.Descricao}}</option>
             {{end}}
@@ -219,21 +222,21 @@
     
         <label for="plataforma_id">Plataforma:</label>
         <select id="plataforma_id" name="plataforma_id">
-            <option value="">Selecione uma plataforma</option>
+            <option value="6">Selecione uma plataforma</option>
             {{range .Plataformas}}
             <option value="{{.ID}}">{{.Descricao}}</option>
             {{end}}
         </select><br>
-    
-        <label for="referencia_bc">Referência BC:</label>
-        <input type="text" id="referencia_bc" name="referencia_bc"><br>
+        
+        <h5><br>
+        <h2>Relatório:</h2>
     
         <label for="preliminar">
             <input type="checkbox" id="preliminar" name="preliminar">
-            Preliminar
-        </label><br>
+            Relatório Preliminar
+        </label>
     
-        <h3>Audiência</h3>
+        <h3>Audiência Prévia</h3>
         <div class="date-time-group">
             <label for="dia_audiencia"></label>
             <input type="date" id="dia_audiencia" name="dia_audiencia">
@@ -244,27 +247,35 @@
     
         <label for="final">
             <input type="checkbox" id="final" name="final">
-            Final
-        </label><br>
+            Relatório Final
+        </label>
         
         <label for="recurso">
             <input type="checkbox" id="recurso" name="recurso">
             Recurso
-        </label><br>
+        </label>
     
         <label for="impugnacao">
             <input type="checkbox" id="impugnacao" name="impugnacao">
             Impugnação
-        </label><br>
+        </label>
     
+        <label for="adjudicatario_id">Adjudicatário:</label>
+        <select id="adjudicatario_id" name="adjudicatario_id">
+            <option value="1"></option>
+            {{range .Resultado}}
+            <option value="{{.ID}}">{{.Descricao}}</option>
+            {{end}}
+        </select><br>
+
         <label for="estado_id">Estado:</label>
         <select id="estado_id" name="estado_id">
-            <option value="">Selecione um estado</option>
+            <option value="1">Selecione um estado</option>
             {{range .Estados}}
             <option value="{{.ID}}">{{.Descricao}}</option>
             {{end}}
         </select><br>
-    
+
         <button type="submit">Criar</button>
     </form>
     <br>

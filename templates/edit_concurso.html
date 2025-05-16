@@ -209,6 +209,9 @@
         <label for="preco">Preço:</label>
         <input type="number" id="preco" name="preco" value="{{.Concurso.Preco}}" step="0.01" required><br>
 
+        <label for="referencia_bc">Referência BC:</label>
+        <input type="text" id="referencia_bc" name="referencia_bc" value="{{.Concurso.ReferenciaBC}}"><br>
+
         <label for="tipo_id">Tipo:</label>
         <select id="tipo_id" name="tipo_id" required>
             {{range .Tipos}}
@@ -223,15 +226,15 @@
             {{end}}
         </select><br>
 
-        <label for="referencia_bc">Referência BC:</label>
-        <input type="text" id="referencia_bc" name="referencia_bc" value="{{.Concurso.ReferenciaBC}}"><br>
+        <h5><br>
+        <h2>Relatório:</h2>
 
         <label for="preliminar">
             <input type="checkbox" id="preliminar" name="preliminar" {{if .Concurso.Preliminar}}checked{{end}}>
             Preliminar
         </label> 
 
-        <h3>Audiência</h3>
+        <h3>Audiência Prévia</h3>
         <div class="date-time-group">
             <label for="dia_audiencia"></label>
             <input type="date" id="dia_audiencia" name="dia_audiencia" value="{{.Concurso.DiaAudiencia.String}}">
@@ -254,6 +257,14 @@
             <input type="checkbox" id="impugnacao" name="impugnacao" {{if .Concurso.Impugnacao}}checked{{end}}>
             Impugnação
         </label> 
+
+        <label for="adjudicatario_id">Adjudicatário:</label>
+        <select id="adjudicatario_id" name="adjudicatario_id">
+            <option value="1"></option>
+            {{range .Resultado}}
+            <option value="{{.ID}}">{{.Descricao}}</option>
+            {{end}}
+        </select><br>
 
         <label for="estado_id">Estado:</label>
         <select id="estado_id" name="estado_id" required>

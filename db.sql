@@ -27,6 +27,11 @@ CREATE TABLE estado (
     descricao VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE resultado (
+    id_resultado INT PRIMARY KEY AUTO_INCREMENT,
+    descricao VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE logs (
     id_logs INT PRIMARY KEY AUTO_INCREMENT,
     tabela VARCHAR(255) NOT NULL,
@@ -67,24 +72,28 @@ INSERT INTO cargo (id_cargo, descricao) VALUES (2, 'SAV');
 INSERT INTO cargo (id_cargo, descricao) VALUES (3, 'DCP');
 INSERT INTO cargo (id_cargo, descricao) VALUES (4, 'GUEST');
 
-INSERT INTO tipo (id_tipo, descricao) VALUES (1, 'CTE');
-INSERT INTO tipo (id_tipo, descricao) VALUES (2, 'CO');
-INSERT INTO tipo (id_tipo, descricao) VALUES (3, 'INF');
-INSERT INTO tipo (id_tipo, descricao) VALUES (4, 'CI');
+INSERT INTO tipo (id_tipo, descricao) VALUES (1, '');
+INSERT INTO tipo (id_tipo, descricao) VALUES (2, 'CTE');
+INSERT INTO tipo (id_tipo, descricao) VALUES (3, 'CON');
+INSERT INTO tipo (id_tipo, descricao) VALUES (4, 'INF');
+INSERT INTO tipo (id_tipo, descricao) VALUES (5, 'CI');
+INSERT INTO tipo (id_tipo, descricao) VALUES (6, 'ROB');
 
-INSERT INTO plataforma (id_platforma, descricao) VALUES (1, 'email');
-INSERT INTO plataforma (id_platforma, descricao) VALUES (2, 'vortal');
-INSERT INTO plataforma (id_platforma, descricao) VALUES (3, 'acingov');
-INSERT INTO plataforma (id_platforma, descricao) VALUES (4, 'anogov');
-INSERT INTO plataforma (id_platforma, descricao) VALUES (5, 'saphety');
+INSERT INTO plataforma (id_platforma, descricao) VALUES (1, '');
+INSERT INTO plataforma (id_platforma, descricao) VALUES (2, 'email');
+INSERT INTO plataforma (id_platforma, descricao) VALUES (3, 'vortal');
+INSERT INTO plataforma (id_platforma, descricao) VALUES (4, 'acingov');
+INSERT INTO plataforma (id_platforma, descricao) VALUES (5, 'anogov');
+INSERT INTO plataforma (id_platforma, descricao) VALUES (6, 'saphety');
 
 INSERT INTO user (nome, email, password, cargo_id) 
 VALUES ('beso', 'beso', 'beso', 1);
 
-INSERT INTO estado (id_estado, descricao) VALUES (1, 'ongoing');
-INSERT INTO estado (id_estado, descricao) VALUES (2, 'sent');
-INSERT INTO estado (id_estado, descricao) VALUES (3, 'notsent');
-INSERT INTO estado (id_estado, descricao) VALUES (4, 'declaration');
+INSERT INTO estado (id_estado, descricao) VALUES (1, '');
+INSERT INTO estado (id_estado, descricao) VALUES (2, 'ongoing');
+INSERT INTO estado (id_estado, descricao) VALUES (3, 'sent');
+INSERT INTO estado (id_estado, descricao) VALUES (4, 'notsent');
+INSERT INTO estado (id_estado, descricao) VALUES (5, 'declaration');
 
 INSERT INTO concurso (
     referencia, entidade, dia_erro, hora_erro, dia_proposta, hora_proposta, preco, 

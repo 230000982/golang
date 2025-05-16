@@ -323,6 +323,12 @@ func editConcursoHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	resultado, err := getAdjudicatario()
+	if err != nil {
+		http.Error(w, "Erro ao buscar estados", http.StatusInternalServerError)
+		return
+	}
+
 	// PREPARE DATA
 	data := struct {
 		Concurso interface{}
@@ -338,11 +344,16 @@ func editConcursoHandler(w http.ResponseWriter, r *http.Request) {
 			ID        int
 			Descricao string
 		}
+		Resultado []struct {
+			ID        int
+			Descricao string
+		}
 	}{
 		Concurso:    concurso,
 		Tipos:       tipos,
 		Plataformas: plataformas,
 		Estados:     estados,
+		Resultado:   resultado,
 	}
 
 	// RENDER TEMPLATE EDITAR_CONCURSO
@@ -411,7 +422,7 @@ func updateConcursoHandler(w http.ResponseWriter, r *http.Request) {
 		// SENDMAIL
 		message := "Um concurso foi atualizado:"
 		switch estado {
-		case "1":
+		case "1": // 2
 			message = "Em andamento"
 		case "2":
 			message = "Foi enviado"
@@ -449,6 +460,12 @@ func createConcursoHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	resultado, err := getAdjudicatario()
+	if err != nil {
+		http.Error(w, "Erro ao buscar resultado", http.StatusInternalServerError)
+		return
+	}
+
 	// PREPARE DATA
 	data := struct {
 		Tipos []struct {
@@ -463,10 +480,15 @@ func createConcursoHandler(w http.ResponseWriter, r *http.Request) {
 			ID        int
 			Descricao string
 		}
+		Resultado []struct {
+			ID        int
+			Descricao string
+		}
 	}{
 		Tipos:       tipos,
 		Plataformas: plataformas,
 		Estados:     estados,
+		Resultado:   resultado,
 	}
 
 	// RENDER CRIAR_CONCURSO
@@ -569,7 +591,7 @@ func saveConcursoHandler(w http.ResponseWriter, r *http.Request) {
 // Prepara a pagina para mostrar os concursos (100% ok)
 func concursosHandler(w http.ResponseWriter, r *http.Request) {
 	// Obter parâmetro de pesquisa da URL
-	referencia := r.URL.Query().Get("referencia")
+	entidade := r.URL.Query().Get("entidade")
 
 	// Construir a consulta SQL base
 	query := `
@@ -583,10 +605,13 @@ func concursosHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Adicionar filtro se houver pesquisa por referência
 	var args []interface{}
-	if referencia != "" {
-		query += " WHERE c.referencia LIKE ?"
-		args = append(args, "%"+referencia+"%")
+	if entidade != "" {
+		query += " WHERE c.entidade LIKE ?"
+		args = append(args, "%"+entidade+"%")
 	}
+
+	// Adicionar ordenação por dia_proposta e hora_proposta
+	query += " ORDER BY c.dia_proposta DESC, c.hora_proposta DESC"
 
 	// Executar a consulta
 	rows, err := db.Query(query, args...)
@@ -597,7 +622,7 @@ func concursosHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer rows.Close()
 
-	// PREPARE DATA (mantido igual)
+	// PREPARE DATA
 	type Concurso struct {
 		ID            int
 		Preco         string
@@ -621,7 +646,7 @@ func concursosHandler(w http.ResponseWriter, r *http.Request) {
 
 	var concursos []Concurso
 
-	// SCAN ROWS (mantido igual)
+	// SCAN ROWS
 	for rows.Next() {
 		var c Concurso
 		var preco float64
@@ -641,7 +666,7 @@ func concursosHandler(w http.ResponseWriter, r *http.Request) {
 		concursos = append(concursos, c)
 	}
 
-	// RENDER TEMPLATE CONCURSOS (mantido igual)
+	// RENDER TEMPLATE CONCURSOS
 	tmpl := template.Must(template.ParseFiles("templates/concursos.html"))
 	tmpl.Execute(w, concursos)
 }
@@ -793,7 +818,10 @@ func concursosOrderByHandler(w http.ResponseWriter, r *http.Request) {
 
 // Gera o PDF com os concursos (100% ok)
 func downloadPDFHandler(w http.ResponseWriter, r *http.Request) {
+	// Obter a data e hora atual
 	now := time.Now()
+	currentDate := now.Format("2006-01-02")
+	currentTime := now.Format("15:04:05")
 
 	rows, err := db.Query(`
         SELECT c.id_concurso, c.entidade, c.estado_id,
@@ -843,8 +871,18 @@ func downloadPDFHandler(w http.ResponseWriter, r *http.Request) {
 			log.Println("Erro no Scan:", err)
 			continue
 		}
+		// Função auxiliar para verificar se a data já passou
+		isFutureDate := func(date, time string) bool {
+			if date > currentDate {
+				return true
+			}
+			if date == currentDate && time > currentTime {
+				return true
+			}
+			return false
+		}
 
-		if diaProposta.Valid && horaProposta.Valid {
+		if diaProposta.Valid && horaProposta.Valid && isFutureDate(diaProposta.String, horaProposta.String) {
 			items = append(items, ConcursoItem{
 				Referencia: referencia,
 				Entidade:   entidade,
@@ -855,7 +893,7 @@ func downloadPDFHandler(w http.ResponseWriter, r *http.Request) {
 			})
 		}
 
-		if diaErro.Valid && horaErro.Valid {
+		if diaErro.Valid && horaErro.Valid && isFutureDate(diaErro.String, horaErro.String) {
 			items = append(items, ConcursoItem{
 				Referencia: referencia,
 				Entidade:   entidade,
@@ -866,7 +904,7 @@ func downloadPDFHandler(w http.ResponseWriter, r *http.Request) {
 			})
 		}
 
-		if diaAudiencia.Valid && horaAudiencia.Valid {
+		if diaAudiencia.Valid && horaAudiencia.Valid && isFutureDate(diaAudiencia.String, horaAudiencia.String) {
 			items = append(items, ConcursoItem{
 				Referencia: referencia,
 				Entidade:   entidade,
@@ -1044,6 +1082,34 @@ func getEstados() ([]struct {
 		estados = append(estados, e)
 	}
 	return estados, nil
+}
+
+func getAdjudicatario() ([]struct {
+	ID        int
+	Descricao string
+}, error) {
+	rows, err := db.Query("SELECT id_resultado, descricao FROM resultado")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var resultado []struct {
+		ID        int
+		Descricao string
+	}
+	for rows.Next() {
+		var a struct {
+			ID        int
+			Descricao string
+		}
+		err := rows.Scan(&a.ID, &a.Descricao)
+		if err != nil {
+			return nil, err
+		}
+		resultado = append(resultado, a)
+	}
+	return resultado, nil
 }
 
 //----- FUNCS ----- SUPORT -----//

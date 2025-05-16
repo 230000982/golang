@@ -201,15 +201,15 @@
     <div class="header">
         <h1>Lista de Concursos</h1>
     </div>
-    <a href="/home">Voltar</a>
+    <a href="/concursos-ordenados">DCP</a>
     <br><br>
     <a href="/create-concurso">
         <button>Criar Concurso</button>
     </a>
-    <!-- formulário de pesquisa -->
+    <!-- formulário de pesquisa modificado para pesquisar por Entidade -->
     <form action="/concursos" method="get">
-        <label for="referencia">Pesquisar por Referência:</label>
-        <input type="text" id="referencia" name="referencia" placeholder="Digite a referência">
+        <label for="entidade">Pesquisar por Entidade:</label>
+        <input type="text" id="entidade" name="entidade" placeholder="Digite o nome da entidade">
         <button type="submit">Buscar</button>
         <a href="/concursos" style="margin-left: 10px;">Limpar pesquisa</a>
     </form>
@@ -218,18 +218,18 @@
             <tr>
                 <th>Referência</th>
                 <th>Entidade</th>
-                <th>Esclarecimentos/Erros</th>
+                <th>Esclarecimentos Erros</th>
                 <th>Hora</th>
-                <th>Proposta/Limite</th>
+                <th>Proposta</th>
                 <th>Hora</th>
                 <th>Preço Base</th>
                 <th>Ref. BC</th>
                 <th>Tipo</th>
                 <th>Plataforma</th>
-                <th>Preliminar</th>
-                <th>Audiência/Prévia</th>
+                <th>Relatório Preliminar</th>
+                <th>Audiência Prévia</th>
                 <th>Hora</th>
-                <th>Final</th>
+                <th>Relatório Final</th>
                 <th>Recurso</th>
                 <th>Impugnação</th>
                 <th>Estado</th>
